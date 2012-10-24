@@ -14,8 +14,8 @@
 		$lname = clearData($_POST["lname"]);
 		$mail = clearData($_POST["mail"]);
 		$role = clearData($_POST["role"]);
-		update_user_id($name, $lname, $mail, $id);
-		update_role($id, $role);
+		update_user_id($name, $lname, $mail, $id, $db);
+		update_role($id, $role, $db);
 		echo $ini_array["update_successfully"];		
 	}
 	echo "<p><a href='../index.php?page=edit_users'>".$ini_array['back']."</a></p>";
@@ -28,8 +28,8 @@
 					($_FILES["userfile"]["type"] == "image/gif")){
 						$tmp_name = $_FILES["userfile"]["tmp_name"];
 						$f_name = $_FILES["userfile"]["name"];
-						$result = select_user_id($id);
-						$assoc = mysql_fetch_assoc ($result);
+						$result = select_user_id($id, $db);
+						$assoc = $result->fetch(PDO::FETCH_ASSOC);
 						$login = $assoc["login"];
 						$dir = "../images/ava/".$login;
 						remove_dir($dir,"");
@@ -39,7 +39,7 @@
 						move_uploaded_file($tmp_name, $dir."/".$f_name);						
 						echo $ini_array['image_update']."<br>";
 				}else{
-					exit ("$ini_array['file_type_error']");
+					exit ($ini_array['file_type_error']);
 				}
 			}
 		}

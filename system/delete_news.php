@@ -11,9 +11,9 @@
 	if (isset($_GET["id"]) && !empty($_GET["id"])){
 		$id = $_GET["id"];
 		if ($_SESSION["lang"] == "ua")
-			delete_news($id);
+			delete_news($id, $db);
 		else
-			delete_news_en($id);		
+			delete_news_en($id, $db);		
 		echo $ini_array['News_successfully_removed'];
 		echo "<p><a href='../index.php?page=news'>".$ini_array['back']."</a>";
 	}

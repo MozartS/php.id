@@ -1,17 +1,17 @@
 <table border="0" width="100%">			
 	<?php
 		if (!(isset($_GET["id"]))){
-			$result = select_user_all();
+			$result = select_user_all($db);
 			$i = 0;
-			while($assoc = mysql_fetch_assoc($result)){?>
+			while($assoc = $result->fetch(PDO::FETCH_ASSOC)){?>
 				<tr>					
 					<td width = "30%">				
 						<?php
 							$uid = $assoc["uid"];
-							$result3 = select_user_id_role($uid);
-							$assoc3 = mysql_fetch_assoc ($result3);
-							$result2 = select_user_id($uid);
-							$assoc2 = mysql_fetch_assoc ($result2);
+							$result3 = select_user_id_role($uid, $db);
+							$assoc3 = $result3->fetch(PDO::FETCH_ASSOC);
+							$result2 = select_user_id($uid, $db);
+							$assoc2 = $result2->fetch(PDO::FETCH_ASSOC);
 							$login = $assoc2["login"];
 							$dir = "images/ava/".$login;
 							$filename = name_file($dir);
@@ -35,17 +35,17 @@
 			<?php }
 		}else{
 			$id = (int)strip_tags($_GET["id"]);
-			$result3 = select_user_id_role($id);
-			$assoc3 = mysql_fetch_assoc ($result3);
-			$result = select_user_id($id);
-			$assoc = mysql_fetch_assoc($result);
+			$result3 = select_user_id_role($id, $db);
+			$assoc3 = $result3->fetch(PDO::FETCH_ASSOC);
+			$result = select_user_id($id, $db);
+			$assoc = $result->fetch(PDO::FETCH_ASSOC);
 			
 			$login = $assoc["login"];
 			$dir = "images/ava/".$login;
 			$filename = name_file($dir);
 			$dir .= "/".$filename;		
 			//вибірка всіх ролей для select
-			$result4 = select_roles_all();
+			$result4 = select_roles_all($db);
 	?>
 		<div class="lang">
 		<form enctype="multipart/form-data" action="system/user_account_admin.php" method="POST">
@@ -57,7 +57,7 @@
 		<p><label for="role"><?=$ini_array["role"]?>:</label><br>
 		<select name="role" id="role">
 		<?php
-			while ($assoc4 = mysql_fetch_assoc ($result4)){
+			while ($assoc4 = $result4->fetch(PDO::FETCH_ASSOC)){
 				if ($assoc4["name"] == $assoc3["name"]) {
 		?>
 					<option value="<?=$assoc4["rid"]?>" selected><?=$assoc4["name"]?></option>

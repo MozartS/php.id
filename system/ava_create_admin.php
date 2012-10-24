@@ -9,8 +9,8 @@
 	
 	if (isset($_GET["id"])){
 		$id = (int)strip_tags($_GET["id"]);
-		$result = select_user_id($id);
-		$assoc = mysql_fetch_assoc($result);
+		$result = select_user_id($id, $db);
+		$assoc = $result->fetch(PDO::FETCH_ASSOC);
 		$login = $assoc["login"];
 	}
 	//отримання імені картинки

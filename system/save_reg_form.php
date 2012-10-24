@@ -19,29 +19,30 @@
 				$pass = clearData($_POST["pass"]);
 				$pass2 = clearData($_POST["pass2"]);
 				$date = $_POST["date"];
-				if (chek_login($login))
-					exit("$ini_array['this_login']");
-				if (chek_mail($mail))
-					exit("$ini_array['this_mail']");
+				if (chek_login($login, $db))
+					exit($ini_array['this_login']);
+				if (chek_mail($mail, $db))
+					exit($ini_array['this_mail']);
 				if (strlen($pass) < 6 || strlen($pass) > 16)
-					exit("$ini_array['pass']");
+					exit($ini_array['pass']);
 				if ($pass == $pass2){
 					$pass = md5(md5($pass));
 				if (!(valid_email($mail)))
-					exit("$ini_array['mail']");
+					exit($ini_array['mail']);
 				//зберігаємо користувача в БД
-				save_user($login, $mail, $pass, $date);				
+				save_user($login, $mail, $pass, $date, $db);				
 				//зберігаємо користувача в сесію
 				save_session ($login, $pass);
 				//отримуємо id користувача
 				$log = $_SESSION["login"];
-				$result = select_user($log);
-				$assoc = mysql_fetch_assoc ($result);
+				$result = select_user($log, $db);
+				$assoc = $result->fetch(PDO::FETCH_ASSOC);
 				$uid = $assoc["uid"];
+				save_id($uid);
 				//надаємо роль користувачеві
-				user_role_reg($uid);
-				$result = select_roles($uid);
-				$assoc = mysql_fetch_assoc ($result);
+				user_role_reg($uid, $db);
+				$result = select_roles($uid, $db);
+				$assoc = $result->fetch(PDO::FETCH_ASSOC);
 				$rid = $assoc["rid"];				
 				//записуємо ролі в сесію
 				save_session_role($uid, $rid);

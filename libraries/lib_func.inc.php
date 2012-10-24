@@ -3,7 +3,7 @@
 	function clearData($data,$type="s"){
 		switch ($type){
 			case "s": 
-				return mysql_real_escape_string(trim(strip_tags($data)));
+				return trim(strip_tags($data));
 			break;
 			case "i": 
 				return (int)$data;
@@ -16,6 +16,10 @@
 		$_SESSION["pass"] = $pass;
 		$_SESSION["on"] = "on";
 		$_SESSION["date"] = date('Y-m-d,H-i-s');		
+	}
+	//«бер≥гаЇмо id користувача в сес≥ю
+	function save_id($id){
+		$_SESSION["id"] = $id;	
 	}
 	//«бер≥гаЇмо користувача в сес≥ю
 	function save_session_role($uid, $rid){

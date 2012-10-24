@@ -11,18 +11,17 @@
 	if ($_SERVER["REQUEST_METHOD"] == "POST"){
 		if (isset($_POST["title"]) && !empty($_POST["title"]) &&
 			isset($_POST["date"]) && !empty($_POST["date"]) &&			
-			isset($_POST["text"]) && !empty($_POST["text"]) &&
-			isset($_POST["author"]) && !empty($_POST["author"]))
+			isset($_POST["text"]) && !empty($_POST["text"]))
 			{
 				$id = $_POST["id"];
 				$title = clearData($_POST["title"]);
 				$date = clearData($_POST["date"]);				
 				$text = clearData($_POST["text"]);
-				$author = clearData($_POST["author"]);
+				$author = $_SESSION["login"];
 				if ($_SESSION["lang"] == "ua")
-					update_news ($id, $title, $date, $text, $author);
+					update_news ($id, $title, $date, $text, $author, $db);
 				else
-					update_news_en ($id, $title, $date, $text, $author);				
+					update_news_en ($id, $title, $date, $text, $author, $db);				
 				echo $ini_array["News_successfully_updated"];
 				echo "<p><a href='../index.php?page=det_news&id=$id'>".$ini_array['back']."</a></p>";
 			}else{

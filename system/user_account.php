@@ -24,7 +24,7 @@
 						move_uploaded_file($tmp_name, $dir."/".$f_name);						
 						echo $ini_array['image_update']."<br>";
 				}else{
-					exit ("$ini_array['file_type_error']");
+					exit ($ini_array['file_type_error']);
 				}
 			}
 		}
@@ -34,7 +34,7 @@
 		$name = clearData($_POST["name"]);
 		$lname = clearData($_POST["lname"]);
 		$mail = clearData($_POST["mail"]);
-		update_user($name, $lname, $mail, $log);
+		update_user($name, $lname, $mail, $log, $db);
 		echo $ini_array['update_successfully'];		
 	}
 	echo "<p><a href='../index.php?page=user_account'>".$ini_array['back']."</a></p>";

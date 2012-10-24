@@ -2,7 +2,7 @@
 	<tr>
 		<td>
 			<p align="center"><b class="grey">"Copiright 2012"</b></p>
-			<p class="number_user"><?=$ini_array["Number_of_registered_users"]?>: <?=quantity_user()?></p>
+			<p class="number_user"><?=$ini_array["Number_of_registered_users"]?>: <?=quantity_user($db)?></p>
 		</td>
 	</tr>
 </table>

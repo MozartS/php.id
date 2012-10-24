@@ -13,19 +13,20 @@
 			isset($_POST["pass"]) && !empty($_POST["pass"])){
 				$login = clearData($_POST["login"]);
 				$pass = md5(md5(clearData($_POST["pass"])));
-				if( !($assoc = chek_user($login, $pass)) ) {
+				if((chek_user($login, $pass, $db) == 0) ) {
 					echo $ini_array['information_error'];
 					echo "<p><a href='../index.php'>".$ini_array['back']."</a></p>";
 				}else{
 					save_session ($login, $pass);
 					//отримуємо id користувача
 					$log = $_SESSION["login"];
-					$result = select_user($log);
-					$assoc = mysql_fetch_assoc ($result);
+					$stmt = select_user($log, $db);
+					$assoc = $stmt->fetch(PDO::FETCH_ASSOC);
 					$uid = $assoc["uid"];
+					save_id ($uid);
 					//надаємо роль користувачеві					
-					$result = select_roles($uid);
-					$assoc = mysql_fetch_assoc ($result);
+					$result = select_roles($uid, $db);
+					$assoc = $result->fetch(PDO::FETCH_ASSOC);
 					$rid = $assoc["rid"];				
 					//записуємо ролі в сесію
 					save_session_role($uid, $rid);

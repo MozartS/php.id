@@ -1,9 +1,9 @@
 <?php
 	if ($_SESSION["lang"] == "ua")
-		$result = select_news();
+		$result = select_news($db);
 	else
-		$result = select_news_en();		
-	while ($assoc = mysql_fetch_assoc($result)){
+		$result = select_news_en($db);		
+	while ($assoc = $result->fetch(PDO::FETCH_ASSOC)){
 ?>
 <div class="news" >
 		<p class="title"><a href="index.php?page=det_news&id=<?=$assoc["id"]?>" class="decor_b"><?=$assoc["title"]?></a></p>

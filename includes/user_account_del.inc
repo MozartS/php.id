@@ -3,8 +3,11 @@
 	$log = $_SESSION["login"];	
 	$dir = "images/ava/".$log;
 	remove_dir($dir, "del_dir");
-	delete_user($log);
+	delete_user($log, $db);
 	destroy_sesion();
-	echo $ini_array['profile_del'];
-	echo "<p><a href='index.php'>".$ini_array['back']."</a></p>";
+	echo "<html>
+			<head>
+			<meta http-equiv='Refresh' content='0; URL=index.php'>
+			</head>
+		</html>";
 ?>

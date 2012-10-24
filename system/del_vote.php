@@ -6,9 +6,11 @@
 	require ("../libraries/lib_db.inc.php");
 	require ("../libraries/lib_func_db.inc.php");
 	require ("../configuration.php");
-	$log = $_SESSION["login"];
-	$last_date = $_SESSION["date"];
-	update_date($last_date, $log, $db);
-	destroy_sesion();
-	header ("Location: ../index.php");
+	include ("../language/language.inc");
+	if (isset($_GET["id"]) && !empty($_GET["id"])){
+		$id = $_GET["id"];
+		$uid = $_SESSION["id"];
+		delete_vote($id, $uid, $db);
+		header("Location:".$_SERVER['HTTP_REFERER']);
+	}
 ?>

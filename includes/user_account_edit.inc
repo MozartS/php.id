@@ -6,8 +6,8 @@
 				$dir = "images/ava/".$log;
 				$filename = name_file($dir);
 				$dir .= "/".$filename;		
-				$result = select_user($log);
-				$assoc = mysql_fetch_assoc ($result);
+				$result = select_user($log, $db);
+				$assoc = $result->fetch(PDO::FETCH_ASSOC);
 			?>
 			<form enctype="multipart/form-data" action="system/user_account.php" method="POST">
 			<img src="system/ava_create_admin.php?id=<?=$assoc["uid"]?>" class="image_admin">
